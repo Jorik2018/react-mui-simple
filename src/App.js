@@ -1,11 +1,11 @@
 import React from 'react';
-import HelloWorld from './HelloWorld';
+import CrudPage from './CrudPage';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <HelloWorld />
+      <CrudPage />
     </div>
   );
 }
