@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { Alert, FormLabel } from '@mui/material';
+import { FormLabel } from '@mui/material';
 import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -10,7 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import SendIcon from '@mui/icons-material/Send';
-import {Autorenew} from '@mui/icons-material';
+import { Autorenew } from '@mui/icons-material';
 import FormControl from '@mui/material/FormControl';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
@@ -38,6 +38,7 @@ import Divider from '@mui/material/Divider';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+
 
 interface TablePaginationActionsProps {
   count: number;
@@ -132,10 +133,10 @@ const CrudPage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(50);
   const [open, setOpen] = useState(false);
   const [result, setResult] = useState({ size: 0, data: [] });
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  //const [order, setOrder] = React.useState('asc');
+  //const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
-  const [dense, setDense] = React.useState(false);
+  //const [dense, setDense] = React.useState(false);
 
   const handleChange = (name: any, v: any) => {
     if (name.target) {
@@ -241,14 +242,14 @@ const CrudPage = () => {
     fetchData(newPage);
   };
 
-  const ff = (p) => {
-    try {
-      fetchData(p);
-      setPage(p);
-    } catch (e) {
-      console.log(e);
-    }
-  }
+//  const ff = (p) => {
+//    try {
+//      fetchData(p);
+//      setPage(p);
+//    } catch (e) {
+//      console.log(e);
+//    }
+//  }
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -257,10 +258,10 @@ const CrudPage = () => {
     setPage(0);
   };
 
-const onClickRefresh=()=>{
-  fetchData(state.page);
-}
-
+ // const onClickRefresh = () => {
+ //   fetchData(state.page);
+ // }
+ 
   const fetchData = async (page) => {
     const result = await http.get('/admin/directory/api/people/' + page + '/' + rowsPerPage);
     setResult(result);
@@ -269,25 +270,25 @@ const onClickRefresh=()=>{
   useEffect(() => { fetchData(0) }, []);
   return (
     <>
-      <Button onClick={handleClickOpen}>Click me!</Button>
-      <Button onClick={(e) => fetchData(state.page)} endIcon={<Autorenew/>} />
+      <Button onClick={handleClickOpen}>Agregar usuario</Button>
+      <Button onClick={(e) => fetchData(state.page)} endIcon={<Autorenew />} />
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
 
             <TableHead>
               <TableRow>
-              <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={selected.length > 0 && selected.length < result.data.length}
-            checked={result.data.length > 0 && selected.length === result.data.length}
-            onChange={handleSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          />
-        </TableCell>
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    color="primary"
+                    indeterminate={selected.length > 0 && selected.length < result.data.length}
+                    checked={result.data.length > 0 && selected.length === result.data.length}
+                    onChange={handleSelectAllClick}
+                    inputProps={{
+                      'aria-label': 'select all desserts',
+                    }}
+                  />
+                </TableCell>
                 <StyledTableCell style={{ minWidth: 260 }}>Dessert (100g serving)</StyledTableCell>
                 <StyledTableCell style={{ minWidth: 260 }} align="right">Calories</StyledTableCell>
                 <StyledTableCell style={{ minWidth: 260 }} align="right">Fat&nbsp;(g)</StyledTableCell>
@@ -302,36 +303,37 @@ const onClickRefresh=()=>{
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
-                <StyledTableRow
-                hover
-                onClick={(event) => handleClick(event, row.code)}
-                role="checkbox"
-                aria-checked={isItemSelected}
-                tabIndex={-1}
-                key={row.code}
-                selected={isItemSelected}
-                
-                >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
-                        />
-                      </TableCell>
-                  <TableCell style={{ width: 260 }} >
-                    {row.fullName}
-                  </TableCell>
-                  <TableCell style={{ width: 260 }} align="right">
-                    {row.code}
-                  </TableCell>
-                  <TableCell style={{ width: 260 }} align="right">
-                    {row.fat}
-                  </TableCell>
-                </StyledTableRow >
-);})}
+                  <StyledTableRow
+                    hover
+                    onClick={(event) => handleClick(event, row.code)}
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={row.code}
+                    selected={isItemSelected}
+
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        color="primary"
+                        checked={isItemSelected}
+                        inputProps={{
+                          'aria-labelledby': labelId,
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell style={{ width: 260 }} >
+                      {row.fullName}
+                    </TableCell>
+                    <TableCell style={{ width: 260 }} align="right">
+                      {row.code}
+                    </TableCell>
+                    <TableCell style={{ width: 260 }} align="right">
+                      {row.fat}
+                    </TableCell>
+                  </StyledTableRow >
+                );
+              })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>
                   <TableCell colSpan={3} />
@@ -388,36 +390,44 @@ const onClickRefresh=()=>{
               <TextField
                 autoFocus
                 margin="dense"
+                id="nom_total"
                 label="Apellidos y Nombres"
                 type="text"
+                value={o.nom_total}
+                onChange={handleChange}
                 fullWidth
               />
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="direccion"
                 label="Dirección"
                 type="text"
+                value={o.direccion}
+                onChange={handleChange}
                 fullWidth
               />
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="distrito"
                 label="Distrito"
                 type="text"
+                value={o.distrito}
+                onChange={handleChange}
                 fullWidth
               />
               <br /><br />
               <FormControl fullWidth>
-                <FormLabel variant="standard" htmlFor="uncontrolled-native">
+                <FormLabel variant="standard" htmlFor="acces0vivienda">
                   Acceso a la vivienda
                 </FormLabel >
                 <NativeSelect
-                  defaultValue={30}
+                  defaultValue={0}
+                  value={o.acces0vivienda}
+                  onChange={handleChange}
                   inputProps={{
-                    name: 'age',
-                    id: 'uncontrolled-native',
+                    id: 'acces0vivienda',
                   }}
                 >
                   <option value={0}>Seleccionar</option>
@@ -427,10 +437,10 @@ const onClickRefresh=()=>{
                 </NativeSelect>
                 <br />
                 <TextField
-                  id="standard-helperText"
+                  id="espec0acces0vivienda"
                   label="Especifique"
-                  //defaultValue="Describa por favor..."
-                  //helperText="Some important text"
+                  value={o.espec0acces0vivienda}
+                  onChange={handleChange}
                   variant="standard"
                 />
               </FormControl>
@@ -438,29 +448,34 @@ const onClickRefresh=()=>{
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="edad"
                 label="Edad"
                 type="text"
+                value={o.edad}
+                onChange={handleChange}
                 fullWidth
               />
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="ocupacion"
                 label="Ocupación"
                 type="text"
+                value={o.ocupacion}
+                onChange={handleChange}
                 fullWidth
               />
               <br /><br />
               <FormControl fullWidth>
-                <FormLabel variant="standard" htmlFor="uncontrolled-native">
+                <FormLabel variant="standard" htmlFor="grado0instruccion">
                   Grado de Instrucción
                 </FormLabel >
                 <NativeSelect
-                  defaultValue={30}
+                  defaultValue={0}
+                  value={o.grado0instruccion}
+                  onChange={handleChange}
                   inputProps={{
-                    name: 'age',
-                    id: 'uncontrolled-native',
+                    id: 'grado0instruccion',
                   }}
                 >
                   <option value={0}>Seleccionar</option>
@@ -478,43 +493,46 @@ const onClickRefresh=()=>{
                 </NativeSelect>
                 <br />
                 <TextField
-                  id="standard-helperText"
+                  id="espec0grado0instruccion"
                   label="Especifique"
-                  //defaultValue="Describa por favor..."
-                  //helperText="Some important text"
+                  value={o.espec0grado0instruccion}
+                  onChange={handleChange}
                   variant="standard"
                 />
               </FormControl>
               <br /><br />
               <FormControl fullWidth>
-                <FormLabel variant="standard" htmlFor="uncontrolled-native">
+                <FormLabel variant="standard" htmlFor="estado0civil">
                   Estado Civil
                 </FormLabel >
                 <NativeSelect
-                  defaultValue={30}
+                  defaultValue={0}
+                  value={o.estado0civil}
+                  onChange={handleChange}
                   inputProps={{
-                    name: 'age',
-                    id: 'uncontrolled-native',
+                    id: 'estado0civil',
                   }}
                 >
                   <option value={0}>Seleccionar</option>
                   <option value={1}>Soltero/a</option>
                   <option value={2}>Casado/a</option>
                   <option value={3}>Divorciado/a</option>
-                  <option value={3}>Conviviente</option>
-                  <option value={3}>Viudo/a</option>
+                  <option value={4}>Conviviente</option>
+                  <option value={5}>Viudo/a</option>
                 </NativeSelect>
               </FormControl>
               <br /><br />
               <FormControl fullWidth>
-                <FormLabel variant="standard" htmlFor="uncontrolled-native">
+                <FormLabel variant="standard" htmlFor="tipo0seguro">
                   Tipo de Seguro
                 </FormLabel >
                 <NativeSelect
-                  defaultValue={30}
+                  defaultValue={0}
+                  value={o.tipo0seguro}
+                  onChange={handleChange}
                   inputProps={{
-                    name: 'age',
-                    id: 'uncontrolled-native',
+                    id: 'tipo0seguro',
+                    name: 'tipo0seguro'
                   }}
                 >
                   <option value={0}>Seleccionar</option>
@@ -524,10 +542,11 @@ const onClickRefresh=()=>{
                 </NativeSelect>
                 <br />
                 <TextField
-                  id="standard-helperText"
+                  id="esp0tipo0seguro"
+                  name="esp0tipo0seguro"
                   label="Especifique"
-                  //defaultValue="Describa por favor..."
-                  //helperText="Some important text"
+                  value={o.esp0tipo0seguro}
+                  onChange={handleChange}
                   variant="standard"
                 />
               </FormControl>
@@ -535,18 +554,23 @@ const onClickRefresh=()=>{
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="informe0medico"
+                name="informe0medico"
                 label="Informe Medico"
                 type="text"
+                value={o.informe0medico}
+                onChange={handleChange}
                 fullWidth
               />
               <br /><br />
               <FormControl>
-                <FormLabel id="demo-radio-buttons-group-label">Certificado de discapacidad</FormLabel>
+                <FormLabel>Certificado de discapacidad</FormLabel>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
-                  //defaultValue="female"
-                  name="radio-buttons-group"
+                  name="certificado0discapacidad"
+                  id="certificado0discapacidad"
+                  value={o.certificado0discapacidad}
+                  onChange={handleChange}
                 >
                   <FormControlLabel value="SI" control={<Radio />} label="SI" />
                   <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -554,14 +578,16 @@ const onClickRefresh=()=>{
               </FormControl>
               <br /><br />
               <FormControl fullWidth>
-                <FormLabel variant="standard" htmlFor="uncontrolled-native">
+                <FormLabel variant="standard" htmlFor="pertenece0asociacion">
                   Pertenece a alguna asociación
                 </FormLabel >
                 <NativeSelect
-                  defaultValue={30}
+                  defaultValue={0}
+                  value={o.pertenece0asociacion}
+                  onChange={handleChange}
                   inputProps={{
-                    name: 'age',
-                    id: 'uncontrolled-native',
+                    name: 'pertenece0asociacion',
+                    id: 'pertenece0asociacion',
                   }}
                 >
                   <option value={0}>Seleccionar</option>
@@ -570,10 +596,11 @@ const onClickRefresh=()=>{
                 </NativeSelect>
                 <br />
                 <TextField
-                  id="standard-helperText"
+                  name='esp0pertenece0asociacion'
+                  id="esp0pertenece0asociacion"
                   label="Especifique cuál"
-                  //defaultValue="Describa por favor..."
-                  //helperText="Some important text"
+                  value={o.esp0pertenece0asociacion}
+                  onChange={handleChange}
                   variant="standard"
                 />
               </FormControl>
@@ -581,9 +608,12 @@ const onClickRefresh=()=>{
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="telefono"
+                name='telefono'
                 label="Teléfono fijo / Celular"
                 type="text"
+                value={o.telefono}
+                onChange={handleChange}
                 fullWidth
               />
               <br /><br />
@@ -591,8 +621,10 @@ const onClickRefresh=()=>{
                 <FormLabel id="demo-radio-buttons-group-label">¿Requiere cuidador?</FormLabel>
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
-                  //defaultValue="female"
-                  name="radio-buttons-group"
+                  id='requiere0cuidador'
+                  name="requiere0cuidador"
+                  value={o.requiere0cuidador}
+                  onChange={handleChange}
                 >
                   <FormControlLabel value="SI" control={<Radio />} label="SI" />
                   <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -602,27 +634,36 @@ const onClickRefresh=()=>{
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="nom0person0cuidadora"
+                name='nom0person0cuidadora'
                 label="Nombre de la persona cuidadora"
                 type="text"
+                value={o.nom0person0cuidadora}
+                onChange={handleChange}
                 fullWidth
               />
               <br /><br />
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="tel0person0cuidadora"
+                name='tel0person0cuidadora'
                 label="Teléfono de la persona cuidadora"
                 type="text"
+                value={o.tel0person0cuidadora}
+                onChange={handleChange}
                 fullWidth
               />
               <br /><br />
               <TextField
                 autoFocus
                 margin="dense"
-                id="name"
+                id="correo0electronico"
+                name='correo0electronico'
                 label="Correo Electrónico"
                 type="text"
+                value={o.correo0electronico}
+                onChange={handleChange}
                 fullWidth
               />
             </CardContent>
@@ -642,8 +683,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Comprende órdenes simples? por ejemplo: dame la pelota, toma el cuaderno, abre la puerta.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='comprende0ordenes'
+                    name="comprende0ordenes"
+                    value={o.comprende0ordenes}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -654,8 +697,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Escucha?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='escucha'
+                    name="escucha"
+                    value={o.escucha}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -666,8 +711,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Mira?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='mira'
+                    name="mira"
+                    value={o.mira}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -678,8 +725,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Habla?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='habla'
+                    name="habla"
+                    value={o.habla}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -690,8 +739,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Comienza y mantiene una conversación?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='comienza0mantiene0conversacion'
+                    name="comienza0mantiene0conversacion"
+                    value={o.comienza0mantiene0conversacion}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -702,8 +753,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Analiza y encuentra soluciones a los problemas de la vida cotidiana? por ejemplo ¿qué hace, tiene frío o hambre?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='encuentra0soluciones'
+                    name="encuentra0soluciones"
+                    value={o.encuentra0soluciones}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -726,8 +779,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Puede caminar?</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='puede0caminar'
+                    name="puede0caminar"
+                    value={o.puede0caminar}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -738,8 +793,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Puede mover brazos y manos?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='mueve0brazos0manos'
+                    name="mueve0brazos0manos"
+                    value={o.mueve0brazos0manos}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -750,14 +807,19 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Tiene ausencia de alguna extremidad del cuerpo?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='ausencia0miembro0extrimidad'
+                    name="ausencia0miembro0extrimidad"
+                    value={o.ausencia0miembro0extrimidad}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
                   </RadioGroup>
                 </FormControl>
                 <br />
+              
+  
+
                 <FormControl>
                   <FormGroup>
                     <FormLabel>¿Cuál es la extremidad que le falta?</FormLabel>
@@ -767,21 +829,26 @@ const onClickRefresh=()=>{
                     <FormControlLabel control={<Checkbox />} label="Pie" />
                     <FormControlLabel control={<Checkbox />} label="Otro" />
                   </FormGroup>
+              
                   <TextField
-                    id="standard-helperText"
+                    id='esp0falta0extremidad'
+                    name="esp0falta0extremidad"
                     label="Especifique"
-                    //defaultValue="Describa por favor..."
-                    //helperText="Some important text"
+                    value={o.esp0falta0extremidad}
+                    onChange={handleChange}
                     variant="standard"
                   />
+                   
                 </FormControl>
                 <br /><br />
                 <FormControl>
                   <FormLabel id="demo-radio-buttons-group-label">¿Depende de una persona para movilizarse?</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='depende0alguien0movilizarse'
+                    name="depende0alguien0movilizarse"
+                    value={o.depende0alguien0movilizarse}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -789,11 +856,13 @@ const onClickRefresh=()=>{
                 </FormControl>
                 <br />
                 <FormControl>
-                  <FormLabel id="demo-radio-buttons-group-label">¿Usa algún despositivo para movilizarse?.</FormLabel>
+                  <FormLabel id="demo-radio-buttons-group-label">¿Usa algún dispositivo para movilizarse?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='dispositivo0movilizarse'
+                    name="dispositivo0movilizarse"
+                    value={o.dispositivo0movilizarse}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -809,10 +878,11 @@ const onClickRefresh=()=>{
                     <FormControlLabel control={<Checkbox />} label="Otro" />
                   </FormGroup>
                   <TextField
-                    id="standard-helperText"
+                    id='esp0disp0movilizarse'
+                    name="esp0disp0movilizarse"
                     label="Especifique"
-                    //defaultValue="Describa por favor..."
-                    //helperText="Some important text"
+                    value={o.esp0disp0movilizarse}
+                    onChange={handleChange}
                     variant="standard"
                   />
                 </FormControl>
@@ -821,8 +891,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Puede estar de pie por largos períodos de tiempo, como por ejemplo 30 minutos?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='estar0de0pie'
+                    name="estar0de0pie"
+                    value={o.estar0de0pie}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -833,8 +905,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Puede desplazarse fuera de su hogar?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='puede0desplazarse0fuera'
+                    name="puede0desplazarse0fuera"
+                    value={o.puede0desplazarse0fuera}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -856,8 +930,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Puede comer sus alimentos solo?</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='come0solo'
+                    name="come0solo"
+                    value={o.come0solo}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -868,8 +944,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">Puede vestirse solo?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='seviste0solo'
+                    name="seviste0solo"
+                    value={o.seviste0solo}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -880,8 +958,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Puede lavarse todo el cuerpo, bañarse?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='bañarse0solo'
+                    name="bañarse0solo"
+                    value={o.bañarse0solo}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -904,8 +984,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Se relaciona con personas que conoce?</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='relaciona0personas0conoce'
+                    name="relaciona0personas0conoce"
+                    value={o.relaciona0personas0conoce}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -916,8 +998,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Se relaciona con personas que no conoce?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='relaciona0personas0no0conoce'
+                    name="relaciona0personas0no0conoce"
+                    value={o.relaciona0personas0no0conoce}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -928,8 +1012,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Realiza actividad sexual?</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='realiza0actividad0sexual'
+                    name="realiza0actividad0sexual"
+                    value={o.realiza0actividad0sexual}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -952,8 +1038,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Se ocupa de las actividades domésticas? Por ejemplo cocinar, limpiar la casa, lavar la ropa.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='ocupa0actividades0domesticas'
+                    name="ocupa0actividades0domesticas"
+                    value={o.ocupa0actividades0domesticas}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -964,8 +1052,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Presenta dificultades para trabajar?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='dificultades0trabajar'
+                    name="dificultades0trabajar"
+                    value={o.dificultades0trabajar}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -976,8 +1066,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Presenta dificultades para estudiar?</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='dificultades0estudiar'
+                    name="dificultades0estudiar"
+                    value={o.dificultades0estudiar}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -1000,8 +1092,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Participa en actividades de su comunidad? Por ejemplo: festividades, actividades religiosas.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='participa0actividades0comunidad'
+                    name="participa0actividades0comunidad"
+                    value={o.participa0actividades0comunidad}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -1012,8 +1106,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Se le presentan barreras u obstáculos para participar? por ejemplo, inadecuada infraestructura para desplazarse o actividades de rechazo.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='presentan0dificultades0participar'
+                    name="presentan0dificultades0participar"
+                    value={o.presentan0dificultades0participar}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -1037,8 +1133,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Cuenta con el Carné de Crecimiento y Desarrollo? (Se le pide a la persona cuidadora que enseñe el carné)</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='cuenta0carnet0crecimiento0desasrrollo'
+                    name="crecimiento0desasrrollo"
+                    value={o.crecimiento0desasrrollo}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -1049,8 +1147,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿El personal de salud anotó alguna observación sobre el desarrollo de su niño/a?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='seobservo0desarrollo0ninho'
+                    name="seobservo0desarrollo0ninho"
+                    value={o.seobservo0desarrollo0ninho}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -1058,11 +1158,11 @@ const onClickRefresh=()=>{
                 </FormControl>
                 <br />
                 <TextField
-
-                  id="standard-helperText"
+                  id='que0observacion0hizo'
+                  name="que0observacion0hizo"
                   label="¿Qué observación le hizo?"
-                  //defaultValue="Describa por favor..."
-                  //helperText="Some important text"
+                  value={o.que0observacion0hizo}
+                  onChange={handleChange}
                   variant="standard"
                 />
 
@@ -1083,8 +1183,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Qué tipo de transporte usa?</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='tipo0transporte0usa'
+                    name="tipo0transporte0usa"
+                    value={o.tipo0transporte0usa}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="Público" control={<Radio />} label="Público" />
                     <FormControlLabel value="Privado" control={<Radio />} label="Privado" />
@@ -1095,8 +1197,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">Ante algún evento desagradable (por ejemplo, terremoto, incendio, accdidente en el hogar) ¿Sabe usted como actuar?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='sabe0actuar0ante0fenomenos'
+                    name="sabe0actuar0ante0fenomenos"
+                    value={o.sabe0actuar0ante0fenomenos}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -1104,11 +1208,11 @@ const onClickRefresh=()=>{
                 </FormControl>
                 <br />
                 <TextField
-
-                  id="standard-helperText"
+                  name="sabe0actuar0ante0fenomenos0como"
+                  id="sabe0actuar0ante0fenomenos0como"
                   label="¿Cómo?"
-                  //defaultValue="Describa por favor..."
-                  //helperText="Some important text"
+                  value={o.sabe0actuar0ante0fenomenos0como}
+                  onChange={handleChange}
                   variant="standard"
                 />
                 <br /><br />
@@ -1116,8 +1220,10 @@ const onClickRefresh=()=>{
                   <FormLabel id="demo-radio-buttons-group-label">¿Conoce un plan de emergencia?</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    //defaultValue="female"
-                    name="radio-buttons-group"
+                    id='conoce0plan0emergencia'
+                    name="conoce0plan0emergencia"
+                    value={o.conoce0plan0emergencia}
+                    onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
                     <FormControlLabel value="NO" control={<Radio />} label="NO" />
@@ -1125,11 +1231,11 @@ const onClickRefresh=()=>{
                 </FormControl>
                 <br />
                 <TextField
-
-                  id="standard-helperText"
+                  id='como0conoce0plan0emergencia'
+                  name="como0conoce0plan0emergencia"
                   label="¿Cómo?"
-                  //defaultValue="Describa por favor..."
-                  //helperText="Some important text"
+                  value={o.como0conoce0plan0emergencia}
+                  onChange={handleChange}
                   variant="standard"
                 />
               </Typography>
