@@ -140,14 +140,19 @@ const CrudPage = () => {
 
   const handleChange = (name: any, v: any) => {
     if (name.target) {
+   
       v = name;
       name = name.target.name || name.target.id;
     }
-    var vv = v && v.target ? v.target.value : v;
+    
+    var vv = v && v.target ? (v.target.type=='checkbox'?v.target.checked:v.target.value) : v;
+    console.log(name+'='+vv);
     setO(o => ({
       ...o, [name]: vv
     }));
   };
+
+  
 
   const isSelected = (code) => selected.indexOf(code) !== -1;
 
@@ -261,6 +266,11 @@ const CrudPage = () => {
  // const onClickRefresh = () => {
  //   fetchData(state.page);
  // }
+
+// const [checkedState, setCheckedState] = useState(
+//  new Array(toppings.length).fill(false)
+//);
+
  
   const fetchData = async (page) => {
     const result = await http.get('/admin/directory/api/people/' + page + '/' + rowsPerPage);
@@ -872,28 +882,33 @@ const CrudPage = () => {
                 <FormControl>
                   <FormGroup>
                     <FormLabel>¿Qué dispositivo usa para movilizarse?</FormLabel>
-                    <FormControlLabel control={<Checkbox />} label="Bastón" />
-                    <FormControlLabel control={<Checkbox />} label="Andador" />
-                    <FormControlLabel control={<Checkbox />} label="Silla de ruedas" />
-                    <FormControlLabel control={<Checkbox />} label="Otro" />
+                    <FormControlLabel control={<Checkbox name='Bastón' value={o.Bastón} onChange={handleChange} />} label="Bastón" />
+                    <FormControlLabel control={<Checkbox name='Andador' value={o.Andador} onChange={handleChange} />} label="Andador" />
+                    <FormControlLabel control={<Checkbox name='Silla0ruedas' value={o.Silla0ruedas} onChange={handleChange} />} label="Silla de ruedas" />
+                    <FormControlLabel control={<Checkbox name='Otro' value={o.Otro} onChange={handleChange}/> } label="Otro" />
+
                   </FormGroup>
-                  <TextField
+                  {
+                  
+                  o.Otro?<TextField
+                    fullWidth
                     id='esp0disp0movilizarse'
                     name="esp0disp0movilizarse"
                     label="Especifique"
                     value={o.esp0disp0movilizarse}
                     onChange={handleChange}
                     variant="standard"
-                  />
+                  />:<></>
+}
                 </FormControl>
                 <br /><br />
                 <FormControl>
                   <FormLabel id="demo-radio-buttons-group-label">¿Puede estar de pie por largos períodos de tiempo, como por ejemplo 30 minutos?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    id='estar0de0pie'
-                    name="estar0de0pie"
-                    value={o.estar0de0pie}
+                    id='estar0de0pie0mayor30min'
+                    name="estar0de0pie0mayor30min"
+                    value={o.estar0de0pie0mayor30min}
                     onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
@@ -905,9 +920,9 @@ const CrudPage = () => {
                   <FormLabel id="demo-radio-buttons-group-label">¿Puede desplazarse fuera de su hogar?.</FormLabel>
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    id='puede0desplazarse0fuera'
-                    name="puede0desplazarse0fuera"
-                    value={o.puede0desplazarse0fuera}
+                    id='puede0desplazarse0fuerahogar'
+                    name="puede0desplazarse0fuerahogar"
+                    value={o.puede0desplazarse0fuerahogar}
                     onChange={handleChange}
                   >
                     <FormControlLabel value="SI" control={<Radio />} label="SI" />
