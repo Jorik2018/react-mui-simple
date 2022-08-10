@@ -38,6 +38,33 @@ import Divider from '@mui/material/Divider';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+//import checked from '@mui/material/';
+
+function createData(
+  name: string,
+  calories: number,
+  fat: number,
+  carbs: number,
+  protein: number,
+) {
+  return { name, calories, fat, carbs, protein };
+}
+
+const rows = [
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Cupcake', 305, 3.7, 67, 4.3),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
+];
+
+
+    
+
+
+
+
+
 
 
 interface TablePaginationActionsProps {
@@ -140,19 +167,15 @@ const CrudPage = () => {
 
   const handleChange = (name: any, v: any) => {
     if (name.target) {
-   
       v = name;
       name = name.target.name || name.target.id;
     }
-    
-    var vv = v && v.target ? (v.target.type=='checkbox'?v.target.checked:v.target.value) : v;
-    console.log(name+'='+vv);
+    var vv = v && v.target ? (v.target.type === 'checkbox' ? v.target.checked : v.target.value) : v;
+    console.log(name);
     setO(o => ({
       ...o, [name]: vv
     }));
   };
-
-  
 
   const isSelected = (code) => selected.indexOf(code) !== -1;
 
@@ -247,14 +270,14 @@ const CrudPage = () => {
     fetchData(newPage);
   };
 
-//  const ff = (p) => {
-//    try {
-//      fetchData(p);
-//      setPage(p);
-//    } catch (e) {
-//      console.log(e);
-//    }
-//  }
+  //  const ff = (p) => {
+  //    try {
+  //      fetchData(p);
+  //      setPage(p);
+  //    } catch (e) {
+  //      console.log(e);
+  //    }
+  //  }
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -263,15 +286,15 @@ const CrudPage = () => {
     setPage(0);
   };
 
- // const onClickRefresh = () => {
- //   fetchData(state.page);
- // }
+  // const onClickRefresh = () => {
+  //   fetchData(state.page);
+  // }
 
-// const [checkedState, setCheckedState] = useState(
-//  new Array(toppings.length).fill(false)
-//);
+  // const [checkedState, setCheckedState] = useState(
+  //  new Array(toppings.length).fill(false)
+  //);
 
- 
+
   const fetchData = async (page) => {
     const result = await http.get('/admin/directory/api/people/' + page + '/' + rowsPerPage);
     setResult(result);
@@ -446,13 +469,18 @@ const CrudPage = () => {
                   <option value={3}>Otro</option>
                 </NativeSelect>
                 <br />
-                <TextField
-                  id="espec0acces0vivienda"
-                  label="Especifique"
-                  value={o.espec0acces0vivienda}
-                  onChange={handleChange}
-                  variant="standard"
-                />
+                {
+                  o.acces0vivienda == 3 ?
+                    <TextField
+                      id="espec0acces0vivienda"
+                      label="Especifique"
+                      value={o.espec0acces0vivienda}
+                      onChange={handleChange}
+                      variant="standard"
+                    /> : <></>
+                }
+
+
               </FormControl>
               <br /><br />
               <TextField
@@ -502,13 +530,17 @@ const CrudPage = () => {
                   <option value={11}>Otro</option>
                 </NativeSelect>
                 <br />
-                <TextField
-                  id="espec0grado0instruccion"
-                  label="Especifique"
-                  value={o.espec0grado0instruccion}
-                  onChange={handleChange}
-                  variant="standard"
-                />
+                {
+                  o.grado0instruccion == 11 ?
+                    <TextField
+                      id="espec0grado0instruccion"
+                      label="Especifique"
+                      value={o.espec0grado0instruccion}
+                      onChange={handleChange}
+                      variant="standard"
+                    /> : <></>
+                }
+
               </FormControl>
               <br /><br />
               <FormControl fullWidth>
@@ -551,14 +583,18 @@ const CrudPage = () => {
                   <option value={3}>Otro</option>
                 </NativeSelect>
                 <br />
-                <TextField
-                  id="esp0tipo0seguro"
-                  name="esp0tipo0seguro"
-                  label="Especifique"
-                  value={o.esp0tipo0seguro}
-                  onChange={handleChange}
-                  variant="standard"
-                />
+                {
+                  o.tipo0seguro == 3 ?
+                    <TextField
+                      id="esp0tipo0seguro"
+                      name="esp0tipo0seguro"
+                      label="Especifique"
+                      value={o.esp0tipo0seguro}
+                      onChange={handleChange}
+                      variant="standard"
+                    /> : <></>
+                }
+
               </FormControl>
               <br /><br />
               <TextField
@@ -605,14 +641,18 @@ const CrudPage = () => {
                   <option value={2}>No</option>
                 </NativeSelect>
                 <br />
-                <TextField
-                  name='esp0pertenece0asociacion'
-                  id="esp0pertenece0asociacion"
-                  label="Especifique cuál"
-                  value={o.esp0pertenece0asociacion}
-                  onChange={handleChange}
-                  variant="standard"
-                />
+                {
+                  o.pertenece0asociacion == 1 ?
+                    <TextField
+                      name='esp0pertenece0asociacion'
+                      id="esp0pertenece0asociacion"
+                      label="Especifique cuál"
+                      value={o.esp0pertenece0asociacion}
+                      onChange={handleChange}
+                      variant="standard"
+                    /> : <></>
+                }
+
               </FormControl>
               <br /><br />
               <TextField
@@ -827,28 +867,27 @@ const CrudPage = () => {
                   </RadioGroup>
                 </FormControl>
                 <br />
-              
-  
-
                 <FormControl>
                   <FormGroup>
                     <FormLabel>¿Cuál es la extremidad que le falta?</FormLabel>
-                    <FormControlLabel control={<Checkbox />} label="Brazo" />
-                    <FormControlLabel control={<Checkbox />} label="Mano" />
-                    <FormControlLabel control={<Checkbox />} label="Pierna" />
-                    <FormControlLabel control={<Checkbox />} label="Pie" />
-                    <FormControlLabel control={<Checkbox />} label="Otro" />
+                    <FormControlLabel control={<Checkbox name='Brazo' value={o.Brazo} onChange={handleChange} />} label="Brazo" />
+                    <FormControlLabel control={<Checkbox name='Mano' value={o.Mano} onChange={handleChange} />} label="Mano" />
+                    <FormControlLabel control={<Checkbox name='Pierna' value={o.Pierna} onChange={handleChange} />} label="Pierna" />
+                    <FormControlLabel control={<Checkbox name='Pie' value={o.Pie} onChange={handleChange} />} label="Pie" />
+                    <FormControlLabel control={<Checkbox name='Otro0extremidad' value={o.Otro0extremidad} onChange={handleChange} />} label="Otro" />
                   </FormGroup>
-              
-                  <TextField
-                    id='esp0falta0extremidad'
-                    name="esp0falta0extremidad"
-                    label="Especifique"
-                    value={o.esp0falta0extremidad}
-                    onChange={handleChange}
-                    variant="standard"
-                  />
-                   
+                  {
+                    o.Otro0extremidad ?
+                      <TextField
+                        id='esp0falta0extremidad'
+                        name="esp0falta0extremidad"
+                        label="Especifique"
+                        value={o.esp0falta0extremidad}
+                        onChange={handleChange}
+                        variant="standard"
+                        fullWidth
+                      /> : <></>
+                  }
                 </FormControl>
                 <br /><br />
                 <FormControl>
@@ -885,21 +924,20 @@ const CrudPage = () => {
                     <FormControlLabel control={<Checkbox name='Bastón' value={o.Bastón} onChange={handleChange} />} label="Bastón" />
                     <FormControlLabel control={<Checkbox name='Andador' value={o.Andador} onChange={handleChange} />} label="Andador" />
                     <FormControlLabel control={<Checkbox name='Silla0ruedas' value={o.Silla0ruedas} onChange={handleChange} />} label="Silla de ruedas" />
-                    <FormControlLabel control={<Checkbox name='Otro' value={o.Otro} onChange={handleChange}/> } label="Otro" />
-
+                    <FormControlLabel control={<Checkbox name='Otro0dispositivo' value={o.Otro0dispositivo} onChange={handleChange} />} label="Otro" />
                   </FormGroup>
                   {
-                  
-                  o.Otro?<TextField
-                    fullWidth
-                    id='esp0disp0movilizarse'
-                    name="esp0disp0movilizarse"
-                    label="Especifique"
-                    value={o.esp0disp0movilizarse}
-                    onChange={handleChange}
-                    variant="standard"
-                  />:<></>
-}
+                    o.Otro0dispositivo ? <TextField
+                      fullWidth
+                      id='esp0disp0movilizarse'
+                      name="esp0disp0movilizarse"
+                      label="Especifique"
+                      value={o.esp0disp0movilizarse}
+                      onChange={handleChange}
+                      variant="standard"
+                      fullWidth
+                    /> : <></>
+                  }
                 </FormControl>
                 <br /><br />
                 <FormControl>
@@ -1172,14 +1210,20 @@ const CrudPage = () => {
                   </RadioGroup>
                 </FormControl>
                 <br />
-                <TextField
+                {
+                  o.seobservo0desarrollo0ninho == "SI" ?
+                  <TextField
                   id='que0observacion0hizo'
                   name="que0observacion0hizo"
                   label="¿Qué observación le hizo?"
                   value={o.que0observacion0hizo}
                   onChange={handleChange}
                   variant="standard"
-                />
+                  fullWidth
+                /> : <></>
+                }
+
+                
 
               </Typography>
             </CardContent>
@@ -1222,14 +1266,18 @@ const CrudPage = () => {
                   </RadioGroup>
                 </FormControl>
                 <br />
-                <TextField
+                {
+                  o.sabe0actuar0ante0fenomenos == "SI" ?
+                  <TextField
                   name="sabe0actuar0ante0fenomenos0como"
                   id="sabe0actuar0ante0fenomenos0como"
                   label="¿Cómo?"
                   value={o.sabe0actuar0ante0fenomenos0como}
                   onChange={handleChange}
                   variant="standard"
-                />
+                  fullWidth
+                /> : <></>
+                }
                 <br /><br />
                 <FormControl>
                   <FormLabel id="demo-radio-buttons-group-label">¿Conoce un plan de emergencia?</FormLabel>
@@ -1245,14 +1293,19 @@ const CrudPage = () => {
                   </RadioGroup>
                 </FormControl>
                 <br />
-                <TextField
+                {
+                  o.conoce0plan0emergencia == "SI" ?
+                  <TextField
                   id='como0conoce0plan0emergencia'
                   name="como0conoce0plan0emergencia"
                   label="¿Cómo?"
                   value={o.como0conoce0plan0emergencia}
                   onChange={handleChange}
                   variant="standard"
-                />
+                  fullWidth
+                /> : <></>
+                }
+                
               </Typography>
             </CardContent>
           </Card>
