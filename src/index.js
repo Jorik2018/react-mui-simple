@@ -15,3 +15,10 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+/*npm install @capacitor/cli @capacitor/core
+npx cap init
+npm i @capacitor/android
+npx cap add ios
+npm start
+npx cap open ios*/

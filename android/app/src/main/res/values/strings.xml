@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">disabled</string>
+    <string name="title_activity_main">disabled</string>
+    <string name="package_name">gob.regionancash.gds.disabled</string>
+    <string name="custom_url_scheme">gob.regionancash.gds.disabled</string>
+</resources>

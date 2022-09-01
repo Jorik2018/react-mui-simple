@@ -7,6 +7,17 @@
   pointer-events: none;
 }
 
+.MuiInput-input,.MuiFormControl-root {
+  width: max-content;
+  width: -webkit-fill-available;
+  margin: 20px 0px 0px !important;
+}
+
+textarea{
+  width: max-content;
+  width: -webkit-fill-available;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
