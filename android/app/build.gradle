@@ -6,7 +6,7 @@ android {
         applicationId "gob.regionancash.gds.disabled"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 2
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
@@ -15,10 +15,25 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    /*Start customized*/
+    signingConfigs {
+        release {
+            storeFile file("E:/projects/keystore/key.jks")
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+    /*End customized*/
     buildTypes {
         release {
             minifyEnabled false
+            /*Start customized*/
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            /*End customized*/
         }
     }
 }
@@ -39,6 +54,11 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
+    androidTestImplementation('tools.fastlane:screengrab:2.1.0') {
+      exclude group: 'com.jraska:falcon'
+    }
+    androidTestImplementation 'com.jraska:falcon:2.2.0'
+
 }
 
 apply from: 'capacitor.build.gradle'

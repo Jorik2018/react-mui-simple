@@ -68,3 +68,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+https://spin.atomicobject.com/2022/02/10/version-fastlane/
+https://www.runway.team/blog/how-to-build-the-perfect-fastlane-pipeline-for-android#incrementing-version-code

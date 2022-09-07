@@ -6,6 +6,9 @@
   height: 40vmin;
   pointer-events: none;
 }
+.MuiListItemIcon-root{
+  min-width: 30px !important;
+}
 
 .MuiInput-input,.MuiFormControl-root {
   width: max-content;
