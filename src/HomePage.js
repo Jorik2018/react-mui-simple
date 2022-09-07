@@ -1,32 +1,25 @@
-import React, { useState, useEffect, lazy, Suspense} from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { createTheme } from '@mui/material/styles';
 import ListItemButton from '@mui/material/ListItemButton';
-import { debounce } from './utils/Utils';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
 import Snackbar from '@mui/material/Snackbar';
-import {MoveToInbox as InboxIcon,
-  Menu as MenuIcon, Add as AddIcon,Edit as EditIcon,Quiz as QuizIcon,
-  Logout as LogoutIcon} from '@mui/icons-material';
-import Toolbar from '@mui/material/Toolbar';
-import { Alert,AppBar,Box,NestedList } from '@mui/material';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { http } from 'gra-http';
-import Typography from '@mui/material/Typography';
+import {
+  MoveToInbox as InboxIcon,
+  Menu as MenuIcon, Add as AddIcon, Edit as EditIcon, Quiz as QuizIcon,
+  Logout as LogoutIcon
+} from '@mui/icons-material';
+import {
+  Alert, AppBar, Box, Divider, CssBaseline, Drawer, Dialog, DialogActions, DialogContent,
+  DialogContentText, DialogTitle, Toolbar, Typography
+} from '@mui/material';
 import lazyLoader from "./utils/LazyLoader";
-//import { Form as DisabledQuizForm } from './disabledQuiz/Form';
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -45,16 +38,20 @@ const HomePage = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const items=[
-    {text:'Cuestionarios',icon:<QuizIcon />,path:'/',items:[
-      {text:'Agregar',icon:<AddIcon />,path:'/create'}
-    ]},
-    {text:'Salir',icon:<LogoutIcon />,onClick:() => {
-      handleDrawerToggle();
-      navigate(`/`);
-    }}
+  const items = [
+    {
+      text: 'Cuestionarios', icon: <QuizIcon />, path: '/', items: [
+        { text: 'Agregar', icon: <AddIcon />, path: '/create' }
+      ]
+    },
+    {
+      text: 'Salir', icon: <LogoutIcon />, onClick: () => {
+        handleDrawerToggle();
+        navigate(`/`);
+      }
+    }
   ]
-   
+
   const drawer = (
     <div>
       <Toolbar />
@@ -62,34 +59,34 @@ const HomePage = () => {
       <List>
         {items.map((item, index) => (
           <>
-          <ListItem key={item.text} disablePadding>
-            <ListItemButton onClick={item.onClick?item.onClick:()=>{
-              handleDrawerToggle();
-              navigate(item.path);
-            }}>
-              <ListItemIcon>
-                {item.icon|| <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={item.text} />
-
-            </ListItemButton>
-          </ListItem>
-          {item.items?.map((item, index) => (
-            <ListItem key={item.text} disablePadding style={{ paddingLeft:'20px'}}>
-              <ListItemButton onClick={item.onClick?item.onClick:()=>{
+            <ListItem key={item.text} disablePadding>
+              <ListItemButton onClick={item.onClick ? item.onClick : () => {
                 handleDrawerToggle();
                 navigate(item.path);
               }}>
                 <ListItemIcon>
-                  {item.icon|| <MailIcon />}
+                  {item.icon || <MailIcon />}
                 </ListItemIcon>
                 <ListItemText primary={item.text} />
-  
+
               </ListItemButton>
             </ListItem>
-          ))}
+            {item.items?.map((item, index) => (
+              <ListItem key={item.text} disablePadding style={{ paddingLeft: '20px' }}>
+                <ListItemButton onClick={item.onClick ? item.onClick : () => {
+                  handleDrawerToggle();
+                  navigate(item.path);
+                }}>
+                  <ListItemIcon>
+                    {item.icon || <MailIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={item.text} />
 
-</>
+                </ListItemButton>
+              </ListItem>
+            ))}
+
+          </>
         ))}
       </List>
     </div>
@@ -114,11 +111,11 @@ const HomePage = () => {
       },
     },
   });
-  
+
   let navigate = useNavigate();
-  const DisabledQuizList=lazyLoader(() => import('./disabledQuiz/List'));
-  const DisabledQuizForm=lazy(() => import('./disabledQuiz/Form')
-  .then(module=>({default:module.Form}))
+  const DisabledQuizList = lazyLoader(() => import('./disabledQuiz/List'));
+  const DisabledQuizForm = lazy(() => import('./disabledQuiz/Form')
+    .then(module => ({ default: module.Form }))
   );
 
   return (
@@ -184,13 +181,13 @@ const HomePage = () => {
         <Toolbar />
         <Routes>
           <Route index element={
-          <DisabledQuizList/>
+            <DisabledQuizList />
           } />
-          
+
           <Route path={`/create`} element={
             <Suspense fallback={<div>Loading...</div>}>
-          <DisabledQuizForm />
-          </Suspense>
+              <DisabledQuizForm />
+            </Suspense>
           } />
         </Routes>
       </Box>

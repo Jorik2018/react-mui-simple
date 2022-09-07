@@ -1,37 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { debounce } from '../utils/Utils';
-import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
+import React, { useState, useEffect, createRef } from 'react';
+import { debounce, useFormState, http } from 'gra-react-utils';
+import { Delete as DeleteIcon, Edit as EditIcon, Send as SendIcon } from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Toolbar from '@mui/material/Toolbar';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
-  Alert, Box, Button, Checkbox, Dialog, DialogActions, DialogContent,
-  FormGroup, FormLabel, MenuItem, Radio, Snackbar, Stack,
-  TextField
+  Accordion, AccordionSummary, AccordionDetails, Alert,
+  Box, Button, Card, CardContent, Checkbox, Dialog, DialogActions,
+  DialogContent, DialogContentText,
+  FormGroup, FormLabel, MenuItem, Radio, RadioGroup, Snackbar, Stack,
+  DialogTitle, TextField
 } from '@mui/material';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import SendIcon from '@mui/icons-material/Send';
 import FormControl from '@mui/material/FormControl';
-import RadioGroup from '@mui/material/RadioGroup';
-import { http } from 'gra-http';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 
 import { useForm } from "react-hook-form";
 
 export const Form = () => {
 
-  const [o, setO] = useState({});
-  const [e, setE] = useState({});
-  const [state, setState] = useState({ page: 0 });
-  const [rowsPerPage, setRowsPerPage] = useState(50);
+  const formRef = createRef();
+
+  const [o, { defaultProps, handleChange, bindEvents, validate }] = useFormState(useState);
+
   const [open, setOpen] = useState(true);
-  const [result, setResult] = useState({ size: 0, data: [] });
 
   const [openConfirm, setOpenConfirm] = React.useState(false);
 
@@ -43,12 +33,6 @@ export const Form = () => {
 
   const handleCloseConfirm = () => {
     setOpenConfirm(false);
-  };
-
-  const fetchData = async (page) => {
-    const result = await http.get('/admin/directory/api/people/' + page + '/' + rowsPerPage);
-    setResult(result);
-    setState({ page: page });
   };
 
   useEffect(() => {
@@ -66,61 +50,18 @@ export const Form = () => {
     }
   }, []);
 
-  const handleChange = (name: any, v: any) => {
-    if (name.target) {
-      v = name;
-      name = name.target.name || name.target.id;
-    }
-    var vv = v && v.target ? (v.target.type === 'checkbox' ? v.target.checked : v.target.value) : v;
-    setO(o => ({
-      ...o, [name]: vv
-    }));
-  };
-
-  const formRef = React.createRef();
-
   const handleSave = () => {
     const form = formRef.current;
-    if (form != null) {
-      let ok = true;
-      let list = form.querySelectorAll("input");
-      for (let item of list) {
-        if (!item.value) {
-          setE(e => ({
-            ...e, [item.name]: !item.value
-          }));
-          ok = false;
-        }
-      }
-      //if (ok)
+    if (form != null && validate(form))
       http.post('/api/minsa/disabled-quiz', o).then((result) => {
         console.log(result);
       });
-    }
-
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const form = formRef.current;
-    const onfocusout = (e) => {
-      const el = e.target;
-      setE(e => ({
-        ...e, [el.name]: !el.value
-      }));
-    };
     if (form != null) {
-      //onfocusout
-      var list = form.querySelectorAll("input");
-      for (let item of list) {
-        item.addEventListener('focusout', onfocusout);
-        //item.addEventListener('input', handleChange);
-      }
-      return () => {
-        for (let item of list) {
-          item.removeEventListener('focusout', onfocusout);
-          //item.removeEventListener('input', handleChange);
-        }
-      }
+      return bindEvents(form);
     }
   }, [o, open]);
 
@@ -137,21 +78,16 @@ export const Form = () => {
       },
     },
   });
-  const onfocusout = (e) => {
-    const el = e.target;
-    setE(e => ({
-      ...e, [el.name]: !el.value
-    }));
-  };
-  const defaultProps = function (name) {
-    return {
-      name: name,
-      onBlur: onfocusout,
-      error: e[name],
-      required: true,
-      value: o[name],
-      onChange: handleChange
-    }
+
+  function getActions() {
+    return <>
+    <Button variant="contained" onClick={handleClose} color="primary">
+      Cancel
+    </Button>
+      <Button variant="contained" onClick={handleSave} color="primary" endIcon={<SendIcon />}>
+        Grabar
+      </Button>
+    </>
   }
   function getContent() {
     return <ThemeProvider theme={theme}>
@@ -443,7 +379,7 @@ export const Form = () => {
                   <FormControlLabel control={<Checkbox name="b4_5" checked={o.b4_5} onChange={handleChange} />} label="Otro" />
                 </FormGroup>
                 {
-                  o.b4_5 == true ? <TextField
+                  o.b4_5 === true ? <TextField
                     {...defaultProps("b4_5_e")}
                     label="Otro"
                   /> : null
@@ -747,8 +683,7 @@ export const Form = () => {
         <Stack direction="row" justifyContent="center"
           style={{ padding: '10px', backgroundColor: '#1976d2' }}
           alignItems="center" spacing={1}>
-          <Button variant="contained" startIcon={<EditIcon />}>Editar</Button>
-          <Button variant="contained" startIcon={<DeleteIcon />}>Eliminar</Button>
+          {getActions()}
         </Stack>
       </form>
     </ThemeProvider>
@@ -767,12 +702,7 @@ export const Form = () => {
             {getContent()}
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleSave} color="primary" endIcon={<SendIcon />}>
-              Save
-            </Button>
+          {getActions()}
           </DialogActions>
         </Dialog>
 

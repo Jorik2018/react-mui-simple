@@ -1,14 +1,8 @@
 import React from 'react';
 import HomePage from './HomePage';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  useParams,
-  useNavigate,
-  useRouteMatch
+  BrowserRouter as Router
 } from "react-router-dom";
 import './App.css';
 import useToken from './utils/useToken';

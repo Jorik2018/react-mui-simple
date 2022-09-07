@@ -2,20 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
-import { debounce } from '../utils/Utils';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Snackbar from '@mui/material/Snackbar';
 import Toolbar from '@mui/material/Toolbar';
-import { Alert } from '@mui/material';
-import Box from '@mui/material/Box';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+import { Alert ,Dialog,DialogActions,DialogContent,DialogContentText} from '@mui/material';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Autorenew } from '@mui/icons-material';
-import { http } from 'gra-http';
+import { debounce,http } from 'gra-react-utils';
 import Checkbox from '@mui/material/Checkbox';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
@@ -27,16 +21,6 @@ import { styled } from '@mui/material/styles';
 import {
   useNavigate
 } from "react-router-dom";
-
-interface TablePaginationActionsProps {
-  count: number;
-  page: number;
-  rowsPerPage: number;
-  onPageChange: (
-    event: React.MouseEvent<HTMLButtonElement>,
-    newPage: number,
-  ) => void;
-}
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -125,7 +109,7 @@ const List = () => {
   }
 
   const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    event,
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     fetchData(0);
