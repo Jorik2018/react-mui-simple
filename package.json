@@ -36,7 +36,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "update_start": "npm install gra-react-utils@latest --force && react-scripts start",
-    "deploy": "cls && npm run build & npx cap copy && cd android && bundle exec fastlane android deploy && cd ..",
+    "deploy": "cls && npm run build & npx cap copy && cd android && bundle exec fastlane android deploy patch && cd ..",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -53,10 +53,8 @@ platform :android do
           #track: "internal",
           track: "production",
         )[0];
-        puts(build_number);
       end
     end
-    
     increment_version_code(
       gradle_file_path:"./app/build.gradle",
       version_code: build_number + 1
