@@ -1,17 +1,17 @@
 import React, { useState, useEffect, createRef } from 'react';
 import { debounce, useFormState, http } from 'gra-react-utils';
-import { Delete as DeleteIcon, Edit as EditIcon, Send as SendIcon } from '@mui/icons-material';
+import {
+  Delete as DeleteIcon, Edit as EditIcon,
+  ExpandMore as ExpandMoreIcon, Send as SendIcon
+} from '@mui/icons-material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion, AccordionSummary, AccordionDetails, Alert,
   Box, Button, Card, CardContent, Checkbox, Dialog, DialogActions,
-  DialogContent, DialogContentText,
+  DialogContent, DialogContentText, FormControl, FormControlLabel,
   FormGroup, FormLabel, MenuItem, Radio, RadioGroup, Snackbar, Stack,
   DialogTitle, TextField
 } from '@mui/material';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { useForm } from "react-hook-form";
 
@@ -19,7 +19,13 @@ export const Form = () => {
 
   const formRef = createRef();
 
-  const [o, { defaultProps, handleChange, bindEvents, validate }] = useFormState(useState);
+  const [o, { defaultProps, handleChange, bindEvents, validate }] = useFormState(useState,{
+    'houseAccess':'',
+    'instructionGrade':'',
+    'maritalStatus':'',
+    'typeInsurance':'',
+    'belongsAssociation':''
+  });
 
   const [open, setOpen] = useState(true);
 
@@ -81,9 +87,9 @@ export const Form = () => {
 
   function getActions() {
     return <>
-    <Button variant="contained" onClick={handleClose} color="primary">
-      Cancel
-    </Button>
+      <Button variant="contained" onClick={handleClose} color="primary">
+        Cancel
+      </Button>
       <Button variant="contained" onClick={handleSave} color="primary" endIcon={<SendIcon />}>
         Grabar
       </Button>
@@ -128,8 +134,8 @@ export const Form = () => {
                 label="Acceso a la vivienda"
                 {...defaultProps("houseAccess")}
               >
-                {['Facil', 'Accidentado', 'Otro'].map((item) => (
-                  <MenuItem key={item} value={item}>
+                {['Facil', 'Accidentado', 'Otro'].map((item,i) => (
+                  <MenuItem key={'houseAccess_'+i} value={item}>
                     {item}
                   </MenuItem>
                 ))}
@@ -161,7 +167,7 @@ export const Form = () => {
                     'Educación Inclusiva',
                     'Analfabeto',
                     'Otro'
-                  ].map(e => <MenuItem value={e}>{e}</MenuItem>)
+                  ].map((e,i) => <MenuItem key={'instructionGrade_'+i} value={e}>{e}</MenuItem>)
                 }
               </TextField>
               <TextField
@@ -176,7 +182,7 @@ export const Form = () => {
                     'Divorciado/a',
                     'Conviviente',
                     'Viudo/a'
-                  ].map(e => <MenuItem value={e}>{e}</MenuItem>)
+                  ].map((e,i) => <MenuItem key={'maritalStatus_'+i} value={e}>{e}</MenuItem>)
                 }
               </TextField>
               <TextField
@@ -190,7 +196,7 @@ export const Form = () => {
                     'ESSALUD',
                     'Otro',
                     'No tiene'
-                  ].map(e => <MenuItem value={e}>{e}</MenuItem>)
+                  ].map((e,i) => <MenuItem key={'typeInsurance_'+i} value={e}>{e}</MenuItem>)
                 }
               </TextField>
               <TextField
@@ -215,8 +221,8 @@ export const Form = () => {
                 {...defaultProps("belongsAssociation")}
                 label='Pertenece a alguna asociación'
               >
-                {['SI', 'NO'].map((item) => (
-                  <MenuItem key={item} value={item}>
+                {['SI', 'NO'].map((item,i) => (
+                  <MenuItem key={'belongsAssociation_'+i} value={item}>
                     {item}
                   </MenuItem>
                 ))}
@@ -702,7 +708,7 @@ export const Form = () => {
             {getContent()}
           </DialogContent>
           <DialogActions>
-          {getActions()}
+            {getActions()}
           </DialogActions>
         </Dialog>
 

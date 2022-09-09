@@ -10,11 +10,13 @@ const lazyLoader = (importComp) => {
 		componentDidMount() {
 			importComp().then((comp) => this.setState({ component: comp.default }));
 		}
-
+///
 		//rendering the component
 		render() {
 			const C = this.state?.component;
-			return C ? <C {...this.props} /> : <div>Loading...</div>;
+			return C ? <C {...this.props} /> :<div style={{height:'100%',display:'flex',
+			flexDirection: 'column',
+			justifyContent: 'center'}}>Loading...</div>;
 		}
 	};
 };

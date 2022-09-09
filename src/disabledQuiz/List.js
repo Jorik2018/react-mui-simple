@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import Snackbar from '@mui/material/Snackbar';
-import Toolbar from '@mui/material/Toolbar';
-import { Alert ,Dialog,DialogActions,DialogContent,DialogContentText} from '@mui/material';
+import {
+  Alert, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText,
+  Fab, Snackbar, styled, Table, TableCell,
+  TableHead, TableBody, TableRow, TableContainer, Toolbar
+} from '@mui/material';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Autorenew } from '@mui/icons-material';
-import { debounce,http } from 'gra-react-utils';
-import Checkbox from '@mui/material/Checkbox';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import { styled } from '@mui/material/styles';
+import { debounce, http } from 'gra-react-utils';
+import { tableCellClasses } from '@mui/material/TableCell';
 import {
   useNavigate
 } from "react-router-dom";
@@ -127,7 +120,7 @@ const List = () => {
   };
 
   useEffect(() => {
-    const debouncedHandleResize = debounce((width,height)=> {
+    const debouncedHandleResize = debounce((width, height) => {
       const header = document.querySelector('.MuiToolbar-root');
       const tableContainer = document.querySelector('.MuiTableContainer-root');
       const nav = document.querySelector('nav');
@@ -153,10 +146,16 @@ const List = () => {
 
   return (
     <>
-      <Toolbar class="Toolbar-table">
-        <Button startIcon={<EditIcon />} onClick={handleClickOpenConfirm}>Editar</Button>
-        <Button startIcon={<DeleteIcon />} onClick={handleClickOpenConfirm}>Eliminar</Button>
-        <Button onClick={(e) => fetchData(state.page)} endIcon={<Autorenew />} />
+      <Toolbar className="Toolbar-table" direction="row" >
+        <div style={{
+          float: 'none',
+          marginLeft: 'auto',
+          marginRight: 'auto'
+        }}>
+          <Button startIcon={<EditIcon />} onClick={handleClickOpenConfirm}>Editar</Button>
+          <Button startIcon={<DeleteIcon />} onClick={handleClickOpenConfirm}>Eliminar</Button>
+          <Button onClick={(e) => fetchData(state.page)} endIcon={<Autorenew />} />
+        </div>
       </Toolbar>
       <TableContainer sx={{ maxHeight: '100%' }}>
         <Fab color="primary" aria-label="add"
@@ -201,7 +200,7 @@ const List = () => {
                   role="checkbox"
                   aria-checked={isItemSelected}
                   tabIndex={-1}
-                  key={row.code}
+                  key={index + ' ' + row.code}
                   selected={isItemSelected}
                 >
                   <TableCell padding="checkbox">

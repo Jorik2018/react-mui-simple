@@ -72,3 +72,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 https://spin.atomicobject.com/2022/02/10/version-fastlane/
 https://www.runway.team/blog/how-to-build-the-perfect-fastlane-pipeline-for-android#incrementing-version-code
+https://www.raywenderlich.com/26869030-fastlane-tutorial-for-android-getting-started

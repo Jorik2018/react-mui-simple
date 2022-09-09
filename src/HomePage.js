@@ -9,6 +9,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
 import Snackbar from '@mui/material/Snackbar';
+import { debounce,http } from 'gra-react-utils';
 import {
   MoveToInbox as InboxIcon,
   Menu as MenuIcon, Add as AddIcon, Edit as EditIcon, Quiz as QuizIcon,
@@ -23,14 +24,14 @@ import lazyLoader from "./utils/LazyLoader";
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
+  Route,useLocation,
   Link,
   useParams,
   useNavigate,
   useRouteMatch
 } from "react-router-dom";
 
-const HomePage = () => {
+const HomePage = ({logOut}) => {
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -46,8 +47,7 @@ const HomePage = () => {
     },
     {
       text: 'Salir', icon: <LogoutIcon />, onClick: () => {
-        handleDrawerToggle();
-        navigate(`/`);
+        logOut();
       }
     }
   ]
@@ -57,9 +57,9 @@ const HomePage = () => {
       <Toolbar />
       <Divider />
       <List>
-        {items.map((item, index) => (
-          <>
-            <ListItem key={item.text} disablePadding>
+        {items.map((item, index0) => (
+          <React.Fragment key={'List_'+index0} >
+            <ListItem>
               <ListItemButton onClick={item.onClick ? item.onClick : () => {
                 handleDrawerToggle();
                 navigate(item.path);
@@ -72,7 +72,7 @@ const HomePage = () => {
               </ListItemButton>
             </ListItem>
             {item.items?.map((item, index) => (
-              <ListItem key={item.text} disablePadding style={{ paddingLeft: '20px' }}>
+              <ListItem key={'List_'+index0+'_'+index} disablePadding style={{ paddingLeft: '20px' }}>
                 <ListItemButton onClick={item.onClick ? item.onClick : () => {
                   handleDrawerToggle();
                   navigate(item.path);
@@ -86,11 +86,27 @@ const HomePage = () => {
               </ListItem>
             ))}
 
-          </>
+          </React.Fragment>
         ))}
       </List>
     </div>
   );
+
+  let location = useLocation();
+
+  useEffect(() => {
+    const debouncedHandleResize = debounce((width, height) => {
+      const header = document.querySelector('.MuiToolbar-root');
+      const body = formRef.current;
+      body.style.height = (height - header.offsetHeight*0) + 'px';
+    });
+    debouncedHandleResize();
+    window.addEventListener('resize', debouncedHandleResize)
+    return _ => {
+      window.removeEventListener('resize', debouncedHandleResize)
+    }
+  }, [location,mobileOpen]);
+
 
   const [openConfirm, setOpenConfirm] = React.useState(false);
 
@@ -112,9 +128,11 @@ const HomePage = () => {
     },
   });
 
+  const formRef = React.createRef();
+
   let navigate = useNavigate();
   const DisabledQuizList = lazyLoader(() => import('./disabledQuiz/List'));
-  const DisabledQuizForm = lazy(() => import('./disabledQuiz/Form')
+  const DisabledQuizForm = lazyLoader(() => import('./disabledQuiz/Form')
     .then(module => ({ default: module.Form }))
   );
 
@@ -174,21 +192,14 @@ const HomePage = () => {
           {drawer}
         </Drawer>
       </Box>
-      <Box
+      <Box ref={formRef}
         component="main"
         sx={{ flexGrow: 1, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
-        <Toolbar />
+        <Toolbar className="_" />
         <Routes>
-          <Route index element={
-            <DisabledQuizList />
-          } />
-
-          <Route path={`/create`} element={
-            <Suspense fallback={<div>Loading...</div>}>
-              <DisabledQuizForm />
-            </Suspense>
-          } />
+          <Route index element={<DisabledQuizList />} />
+          <Route path={`/create`} element={<DisabledQuizForm />} />
         </Routes>
       </Box>
 

@@ -16,6 +16,18 @@
   margin: 20px 0px 0px !important;
 }
 
+.noMarginTop.MuiInput-input,.noMarginTop.MuiFormControl-root {
+  margin-top: 0px !important;
+}
+.login-link{
+  text-decoration: none;
+  padding: 2px 5px;
+}
+.login-link:hover{
+  background-color: #b4efff;
+  border-radius: 10px;
+}
+
 textarea{
   width: max-content;
   width: -webkit-fill-available;
@@ -49,4 +61,9 @@ textarea{
   to {
     transform: rotate(360deg);
   }
+}
+
+.button-login{
+  background: 
+  #b10000 -webkit-gradient(linear,left top,left bottom,from(rgba(245, 111, 111, 0.8)),to(rgba(255,255,255,0)))
 }

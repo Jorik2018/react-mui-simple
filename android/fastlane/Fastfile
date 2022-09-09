@@ -39,15 +39,27 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    previous_build_number = google_play_track_version_codes(
+    build_number = google_play_track_version_codes(
       #package_name: app_id,
       #json_key: json_key_file_path,
-      track: "internal"
-    )[0]
-    current_build_number = previous_build_number + 1
+      #track: "internal",
+      track: "production",
+    )[0];
+    for arg in ARGV
+      if arg=='patch'
+        versionName = google_play_track_release_names(
+          #package_name: app_id,
+          #json_key: json_key_file_path,
+          #track: "internal",
+          track: "production",
+        )[0];
+        puts(build_number);
+      end
+    end
+    
     increment_version_code(
       gradle_file_path:"./app/build.gradle",
-      version_code: current_build_number
+      version_code: build_number + 1
     )
     #gradle(task: "clean assembleRelease")
     gradle(task: "clean bundleRelease")
